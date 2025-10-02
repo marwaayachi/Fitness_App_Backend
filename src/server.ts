@@ -16,6 +16,7 @@ app.use("/api/auth", authRoutes);
 
 mongoose.connect(process.env.Mongo_URI!)
     .then(() => {
+        console.log("✅ MongoDB connected successfully");
         app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`))
     })
     .catch(err => console.error(err));
