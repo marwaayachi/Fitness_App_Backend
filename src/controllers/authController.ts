@@ -7,10 +7,9 @@ import { JWT_SECRET, JWT_EXPIRES_IN } from "../config/config";
 
 
 
-
 export const register = async (req: Request, res: Response) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, profile } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -18,23 +17,37 @@ export const register = async (req: Request, res: Response) => {
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, passwordHash });
+
+    const user = new User({
+      name,
+      email,
+      passwordHash,
+      profile: {
+        age: profile.age,
+        heightCm: profile.heightCm,
+        weightKg: profile.weightKg,
+      },
+    });
+
     await user.save();
 
     const options: SignOptions = { expiresIn: JWT_EXPIRES_IN };
-
-    const token = jwt.sign(
-      { userId: user._id },
-      JWT_SECRET,  
-      options      
-    );
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET, options);
 
     res.cookie("token", token, { httpOnly: true, sameSite: "strict" });
-    res.status(201).json({ user: { id: user._id, name: user.name, email: user.email } });
+    res.status(201).json({
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        profile: user.profile,
+      },
+    });
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err });
   }
 };
+
 
 export const login = async (req: Request, res: Response) => {
   try {
