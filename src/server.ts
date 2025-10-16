@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth";
+import aiRoutes from "./routes/ai";
+
 
 dotenv.config();
 
@@ -13,6 +15,8 @@ app.use(cors({ origin: "http://localhost:3000", credentials:true}));
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/ai/workout", aiRoutes);
+
 
 mongoose.connect(process.env.Mongo_URI!)
     .then(() => {
