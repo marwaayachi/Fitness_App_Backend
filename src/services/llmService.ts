@@ -8,7 +8,7 @@ if (!process.env.OPENAI_API_KEY) {
 }
 
 const client = new OpenAI({
-  baseURL: "https://openrouter.ai/api/v1", // ✅ use OpenRouter endpoint
+  baseURL: "https://openrouter.ai/api/v1", 
   apiKey: process.env.OPENROUTER_API_KEY,
 });
 
@@ -22,7 +22,7 @@ export const generateWorkoutPlan = async (goal: string, experience: string) => {
   try {
     console.log("💡 Sending request to OpenAI...");
       const completion = await client.chat.completions.create({
-            model: "gpt-4o-mini", // You can also try "mistralai/mixtral-8x7b" or "anthropic/claude-3-haiku"
+            model: "gpt-4o-mini", 
             messages: [{ role: "user", content: prompt }],
       });
 
