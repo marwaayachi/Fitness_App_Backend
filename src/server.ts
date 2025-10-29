@@ -21,7 +21,7 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-mongoose.connect(process.env.Mongo_URI!)
+mongoose.connect(process.env.MONGO_URI!)
     .then(() => {
         console.log("✅ MongoDB connected successfully");
         app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`))
