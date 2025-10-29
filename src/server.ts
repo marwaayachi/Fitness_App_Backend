@@ -14,7 +14,10 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 app.use(cors({
-  origin: "http://localhost:3000", // frontend
+ origin: [
+    "fitness-app-frontend-ochre.vercel.app", // Vercel Frontend
+    "http://localhost:3000" // For local development
+  ],
   credentials: true, // allow cookies
 }));
 
